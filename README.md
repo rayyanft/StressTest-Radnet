@@ -31,31 +31,32 @@ Project ini menyediakan satu antarmuka terpusat untuk mempermudah eksekusi dan p
 
 ### Alur Antarmuka
 
-docs/Index-Preview.png
-docs/Dashboard-Preview.png
+![Index Preview](docs/Index-Preview.png)
+
+![Dashboard Preview](docs/Dashboard-Preview.png)
 
 ### Demonstrasi Pengujian
 
-docs/Demo-StressTest.mp4
+![Video Demonstrasi](docs/Demo-StressTest.mp4)
 
 ---
 
 ## Struktur Project
 
-├── app.py                  
-├── requirements.txt        
-├── locustPrograms/         
-│   ├── ezyWeb.py
-│   ├── riwara.py
-│   ├── lokakarya.py
-│   └── radnet.py
-├── templates/              
-│   ├── index.html          
-│   └── dashboard.html      
-└── docs/                   
-    ├── Demo-StressTest.mp4
-    ├── Index-Preview.png
-    └── Dashboard-Preview.png
+├─ app.py                  
+├─ requirements.txt        
+├─ locustPrograms/         
+│  ├── ezyWeb.py
+│  ├── riwara.py
+│  ├── lokakarya.py
+│  └── radnet.py
+├─ templates/              
+│  ├── index.html          
+│  └── dashboard.html      
+└─ docs/                   
+  ├── Demo-StressTest.mp4 
+  ├── Index-Preview.png
+  └── Dashboard-Preview.png
 
 ---
 
