@@ -42,17 +42,17 @@ docs/Demo-StressTest.mp4
 
 ## Struktur Project
 
-├── app.py                  # Server backend Flask dan routing API
-├── requirements.txt        # Daftar dependensi Python
-├── locustPrograms/         # Skenario pengujian Locust (.py)
+├── app.py                  
+├── requirements.txt        
+├── locustPrograms/         
 │   ├── ezyWeb.py
 │   ├── riwara.py
 │   ├── lokakarya.py
 │   └── radnet.py
-├── templates/              # File antarmuka HTML
-│   ├── index.html          # Halaman form konfigurasi pengujian
-│   └── dashboard.html      # Halaman pemantauan statistik real-time
-└── docs/                   # Dokumentasi visual dan aset laporan
+├── templates/              
+│   ├── index.html          
+│   └── dashboard.html      
+└── docs/                   
     ├── Demo-StressTest.mp4
     ├── Index-Preview.png
     └── Dashboard-Preview.png
