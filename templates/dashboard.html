@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Stats Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; padding: 40px; display: flex; flex-direction: column; align-items: center; }
+        .container-tabel { background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 90%; max-width: 900px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .header-dashboard { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .btn-stop { background-color: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-stop:hover { background-color: #c82333; }
+        .btn-laporan { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="container-tabel">
+        <div class="header-dashboard">
+            <h2>📊 Live Test Statistics</h2>
+            <button class="btn-stop" onclick="hentikanDanKembali()">⏹ Stop & Kembali</button>
+            <button class="btn-laporan" onclick="aksesLaporan()">Laporan Hasil Test</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Request/s</th>
+                    <th>Total Request Count</th>
+                    <th>Failures/s</th>
+                    <th>Total Failure Count</th>
+                    <th>50% (ms)</th>
+                    <th>95% (ms)</th>
+                    <th>100% (ms)</th>
+                </tr>
+            </thead>
+            <tbody id="tabel-body">
+                <tr><td colspan="9">Menunggu data masuk...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let timerLog = setInterval(ambilLogStatistik, 1000);
+
+        function ambilLogStatistik() {
+            fetch('/log', { method: 'GET' })
+            .then(response => response.json())
+            .then(res => {
+                if (res.data && res.data.length > 0) {
+                    let tbody = document.getElementById('tabel-body');
+                    tbody.innerHTML = ''; 
+
+                    res.data.forEach(baris => {
+                        let tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${baris["Type"] || '-'}</td>
+                            <td>${baris["Name"] || '-'}</td>
+                            <td>${baris["Requests/s"] || '-'}</td>
+                            <td>${baris["Request Count"] || '0'}</td>
+                            <td>${baris["Failures/s"] || '-'}</td>
+                            <td>${baris["Failure Count"] || '-'}</td>
+                            <td>${baris["50%"] || '0'}</td>
+                            <td>${baris["95%"] || '0'}</td>
+                            <td>${baris["100%"] || '0'}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            })
+            .catch(err => console.log("Menunggu log..."));
+        }
+
+        function hentikanDanKembali() {
+            clearInterval(timerLog);
+            
+            fetch('/stop', { method: 'POST' })
+            .then(() => {
+                window.location.href = "/";
+            });
+        }
+
+        function aksesLaporan() {
+            window.location.href = "/laporan";
+        }
+    </script>
+
+</body>
+</html>

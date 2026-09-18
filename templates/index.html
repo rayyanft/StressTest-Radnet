@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Load Test Locust</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding-top: 40px; margin: 0; }
+        .kotak-utama { background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 400px; }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        .grup-input { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 14px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        .grup-tombol { display: flex; gap: 10px; margin-top: 25px; }
+        button { flex: 1; padding: 12px; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; font-size: 14px; }
+        .btn-mulai { background-color: #28a745; }
+        .btn-mulai:hover { background-color: #218838; }
+        .btn-stop { background-color: #dc3545; }
+        .btn-stop:hover { background-color: #c82333; }
+        #status-pesan { margin-top: 15px; text-align: center; font-weight: bold; color: #007bff; }
+    </style>
+</head>
+<body>
+
+    <div class="kotak-utama">
+        <h2>Panel Load Testing</h2>
+
+        <div class="grup-input">
+            <label for="target_web">Target Website:</label>
+            <select id="target_web">
+                <option value="ezyweb">Ezy Web</option>
+                <option value="riwara">Riwara</option>
+                <option value="lokakarya">Lokakarya</option>
+                <option value="radnext">Radnet</option>
+            </select>
+        </div>
+
+        <div class="grup-input">
+            <label for="users">Total Users (Simulasi Pengguna):</label>
+            <input type="number" id="users" placeholder="Contoh: 100" value="50">
+        </div>
+
+        <div class="grup-input">
+            <label for="spawn_rate">Spawn Rate (User per detik):</label>
+            <input type="number" id="spawn_rate" placeholder="Contoh: 5" value="2">
+        </div>
+
+        <div class="grup-input">
+            <label for="time">Run Time (Durasi Test):</label>
+            <input type="text" id="time" placeholder="Contoh: 30s atau 1m" value="30s">
+        </div>
+
+        <div class="grup-tombol">
+            <button class="btn-mulai" onclick="mulaiTest()">▶ Mulai Test</button>
+            <!-- <button class="btn-stop" onclick="stopTest()">⏹ Stop Test</button> -->
+        </div>
+
+        <div id="status-pesan">Menunggu instruksi...</div>
+    </div>
+
+    <script>
+        function mulaiTest() {
+            let pilihanWeb = document.getElementById('target_web').value;
+            
+            let urlApiTujuan = '/start-' +pilihanWeb; 
+
+            let dataYangDikirim = {
+                users: document.getElementById('users').value,
+                spawn_rate: document.getElementById('spawn_rate').value,
+                time: document.getElementById('time').value
+            };
+
+            document.getElementById('status-pesan').innerText = "Memulai test ke " + urlApiTujuan + "...";
+
+            fetch(urlApiTujuan, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataYangDikirim)
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.location.href = "/dashboard"; 
+            })
+            .catch(error => {
+                document.getElementById('status-pesan').innerText = "Terjadi kesalahan koneksi!";
+            });
+
+            fetch("/log", {method: "POST", 
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify()
+            })
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+__pycache__/
+venv/
+*.log
+hasilTest/*
+*_stats.csv
+*_stats_history.csv
+*_failures.csv
+*_stats.html
+*_exceptions.csv
