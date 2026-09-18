@@ -63,22 +63,16 @@ Project ini menyediakan satu antarmuka terpusat untuk mempermudah eksekusi dan p
 ## Persiapan dan Penggunaan Lokal
 
 ### 1. Clone Repository
-git clone <repository-url>
-cd radnet-loadtest-interface
+git clone https://github.com/rayyanft/StressTest-Radnet
 
-### 2. Salin dan Atur Environment Variable
-cp .env.example .env
-
-Isi file `.env` sesuai dengan konfigurasi lokal yang diberikan oleh tim.
-
-### 3. Instal Dependensi
+### 2. Instal Dependensi
 Pastikan Python 3.x telah terinstal, lalu jalankan:
 pip install -r requirements.txt
 
-### 4. Jalankan Aplikasi
+### 3. Jalankan Aplikasi
 python app.py
 
-### 5. Akses Aplikasi
+### 4. Akses Aplikasi
 Buka browser dan akses alamat berikut:
 http://localhost:5000
 
