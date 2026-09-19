@@ -4,27 +4,120 @@
     <meta charset="UTF-8">
     <title>Live Stats Dashboard</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; padding: 40px; display: flex; flex-direction: column; align-items: center; }
-        .container-tabel { background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 90%; max-width: 900px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
-        th { background-color: #007bff; color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        .header-dashboard { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .btn-stop { background-color: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .btn-stop:hover { background-color: #c82333; }
-        .btn-laporan { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle at 15% 20%, #cfe0f5 0%, transparent 40%),
+                        radial-gradient(circle at 85% 15%, #f3d4e0 0%, transparent 40%),
+                        radial-gradient(circle at 20% 85%, #d8e6f7 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, #e6d9ef 0%, transparent 40%),
+                        #eef1f7;
+        }
+
+        .container-tabel {
+            background-color: #ffffff;
+            padding: 28px 32px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .header-dashboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .header-dashboard h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a1a2e;
+        }
+
+        .grup-tombol-header {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            color: white;
+        }
+
+        .btn-laporan {
+            background-color: #172554;
+        }
+
+        .btn-laporan:hover {
+            background-color: #1e2f6b;
+        }
+
+        .btn-stop {
+            background-color: #e53e3e;
+        }
+
+        .btn-stop:hover {
+            background-color: #c82333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 13px 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #1a1a2e;
+            color: white;
+            font-weight: 600;
+        }
+
+        td {
+            border-bottom: 1px solid #eef0f3;
+            color: #1a1a2e;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #fafbfc;
+        }
     </style>
 </head>
 <body>
 
     <div class="container-tabel">
         <div class="header-dashboard">
-            <h2>📊 Live Test Statistics</h2>
-            <button class="btn-stop" onclick="hentikanDanKembali()">⏹ Stop & Kembali</button>
-            <button class="btn-laporan" onclick="aksesLaporan()">Laporan Hasil Test</button>
+            <h2>Live Test Statistics</h2>
+            <div class="grup-tombol-header">
+                <button class="btn-laporan" onclick="aksesLaporan()">Laporan Hasil Test</button>
+                <button class="btn-stop" onclick="hentikanDanKembali()">Stop & Kembali</button>
+            </div>
         </div>
-        
+
         <table>
             <thead>
                 <tr>
@@ -54,7 +147,7 @@
             .then(res => {
                 if (res.data && res.data.length > 0) {
                     let tbody = document.getElementById('tabel-body');
-                    tbody.innerHTML = ''; 
+                    tbody.innerHTML = '';
 
                     res.data.forEach(baris => {
                         let tr = document.createElement('tr');
@@ -78,7 +171,7 @@
 
         function hentikanDanKembali() {
             clearInterval(timerLog);
-            
+
             fetch('/stop', { method: 'POST' })
             .then(() => {
                 window.location.href = "/";

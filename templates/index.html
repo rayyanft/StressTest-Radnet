@@ -5,25 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Load Test Locust</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding-top: 40px; margin: 0; }
-        .kotak-utama { background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 400px; }
-        h2 { text-align: center; color: #333; margin-top: 0; }
-        .grup-input { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
-        .grup-tombol { display: flex; gap: 10px; margin-top: 25px; }
-        button { flex: 1; padding: 12px; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; font-size: 14px; }
-        .btn-mulai { background-color: #28a745; }
-        .btn-mulai:hover { background-color: #218838; }
-        .btn-stop { background-color: #dc3545; }
-        .btn-stop:hover { background-color: #c82333; }
-        #status-pesan { margin-top: 15px; text-align: center; font-weight: bold; color: #007bff; }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at 15% 20%, #cfe0f5 0%, transparent 40%),
+                        radial-gradient(circle at 85% 15%, #f3d4e0 0%, transparent 40%),
+                        radial-gradient(circle at 20% 85%, #d8e6f7 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, #e6d9ef 0%, transparent 40%),
+                        #eef1f7;
+        }
+
+        .kotak-utama {
+            background-color: #ffffff;
+            padding: 40px 36px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 400px;
+            max-width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #1a1a2e;
+        }
+
+        h2 .highlight {
+            color: #3b5bfd;
+        }
+
+        .grup-input {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e1e4ea;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #1a1a2e;
+            background-color: #fafafa;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b5bfd;
+            background-color: #ffffff;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        .grup-tombol {
+            margin-top: 28px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-mulai {
+            background-color: #172554;
+        }
+
+        .btn-mulai:hover {
+            background-color: #1e2f6b;
+        }
+
+        #status-pesan {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 13px;
+            color: #6b7280;
+            min-height: 16px;
+        }
     </style>
 </head>
 <body>
 
     <div class="kotak-utama">
-        <h2>Panel Load Testing</h2>
+        <h2>Panel Load <span class="highlight">Testing</span></h2>
 
         <div class="grup-input">
             <label for="target_web">Target Website:</label>
@@ -52,7 +148,6 @@
 
         <div class="grup-tombol">
             <button class="btn-mulai" onclick="mulaiTest()">▶ Mulai Test</button>
-            <!-- <button class="btn-stop" onclick="stopTest()">⏹ Stop Test</button> -->
         </div>
 
         <div id="status-pesan">Menunggu instruksi...</div>
@@ -61,8 +156,8 @@
     <script>
         function mulaiTest() {
             let pilihanWeb = document.getElementById('target_web').value;
-            
-            let urlApiTujuan = '/start-' +pilihanWeb; 
+
+            let urlApiTujuan = '/start-' + pilihanWeb;
 
             let dataYangDikirim = {
                 users: document.getElementById('users').value,
@@ -79,17 +174,18 @@
             })
             .then(response => response.json())
             .then(data => {
-                window.location.href = "/dashboard"; 
+                window.location.href = "/dashboard";
             })
             .catch(error => {
                 document.getElementById('status-pesan').innerText = "Terjadi kesalahan koneksi!";
             });
 
-            fetch("/log", {method: "POST", 
+            fetch("/log", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify()
+                body: JSON.stringify({})
             })
         }
     </script>
