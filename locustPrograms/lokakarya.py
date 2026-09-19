@@ -84,6 +84,6 @@ class WebUser(HttpUser):
     def Login(self):
         with self.client.post("/login", json={"Username": "ney", "Password": "password123"}, catch_response = True) as response:
             if response.status_code == 200:
-                response.failure("tidak ada akun ini")
+                response.failure("Akun tidak ditemukan")
             else:
                 response.success()
