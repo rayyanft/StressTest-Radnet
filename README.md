@@ -42,7 +42,6 @@ Project ini menyediakan satu antarmuka terpusat untuk mempermudah eksekusi dan p
 ---
 
 ```text
-## Struktur Project
 
 ├─ app.py                  
 ├─ requirements.txt        
