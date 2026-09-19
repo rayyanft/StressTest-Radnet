@@ -37,7 +37,7 @@ Project ini menyediakan satu antarmuka terpusat untuk mempermudah eksekusi dan p
 
 ### Demonstrasi Pengujian
 
-![Video Demonstrasi](docs/Demo-StressTest.mp4)
+![Video Demonstrasi](docs/Demo-StressTest.gif)
 
 ---
 
